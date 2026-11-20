@@ -1,0 +1,21 @@
+<ivy-module version="2.0">
+  <info organisation="com.github.cafeduke" module="wordbee" />
+  <configurations defaultconfmapping="core->master;all->default">
+    <conf name="core" description="Map ivy config 'core' to 'master' config of maven" />
+    <conf name="all" description="Map ivy config 'all' to 'default' config of maven" />
+  </configurations>
+  <!--
+    Configuration Mappings
+      - all->default: Ivy's 'all'  is mapped to Maven's 'default'
+      - core->master: Ivy's 'core' is mapped to Maven's 'master'
+
+    Description
+      - Conf 'all' will download all dependencies
+      - Conf 'core' will NOT download dependencies
+      - The 'conf' attribute in the 'dependency' element overrides the parent element's 'defaultconf' attribute
+    -->
+  <dependencies defaultconf="all">
+    <dependency org="org.apache.commons" name="commons-lang3" rev="3.12.0" conf="all" />
+    <dependency org="com.googlecode.lanterna" name="lanterna" rev="3.2.0-alpha1" conf="all"/>
+  </dependencies>
+</ivy-module>

@@ -1,0 +1,59 @@
+<project name="WordBee" default="all"
+  xmlns:ivy="antlib:org.apache.ivy.ant">
+  <!-- TaskDefs -->
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+    <classpath>
+      <pathelement location="${basedir}/lib/ant-contrib/ant-contrib-1.0b3.jar" />
+    </classpath>
+  </taskdef>
+  <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+    <classpath>
+      <pathelement location="${basedir}/lib/ivy/ivy-2.6.0.jar" />
+    </classpath>
+  </taskdef>
+  <!-- Global -->
+  <property environment="env"/>
+  <target name="all" depends="jar">
+    <ivy:retrieve/>
+  </target>
+  <target name="jar" depends="compile">
+    <manifestclasspath property="manifest.classpath" jarfile="${file.jar}">
+      <classpath refid="classpath" />
+    </manifestclasspath>
+    <jar destfile="${file.jar}">
+      <fileset dir="${dir.classes}" />
+      <manifest>
+        <attribute name="Main-Class" value="com.github.cafeduke.bee.WordBeeTUI" />
+        <attribute name="Class-Path" value="${manifest.classpath}" />
+      </manifest>
+    </jar>
+  </target>
+  <target name="compile" depends="build">
+    <javac srcdir="${dir.source}" destdir="${dir.classes}" includes="**/*.java">
+      <classpath>
+        <path refid="classpath" />
+      </classpath>
+    </javac>
+  </target>
+  <target name="build" depends="properties">
+    <ivy:retrieve/>
+  </target>
+  <target name="clean" depends="properties">
+    <delete>
+      <fileset dir="classes" includes="**/*"/>
+      <fileset dir="lib" includes="**/*" excludes="ant-contrib/**,ivy/**"/>
+    </delete>
+  </target>
+  <target name="properties">
+    <property name="dir.source" value="${basedir}/src" />
+    <property name="dir.classes" value="${basedir}/classes" />
+    <property name="dir.lib" value="${basedir}/lib" />
+    <property name="dir.lib.antcontrib" value="${dir.lib}/ant-contrib" />
+    <property name="file.jar" value="${basedir}/WordBeeTUI.jar" />
+    <mkdir dir="${basedir}/classes" />
+    <path id="classpath">
+      <pathelement location="${dir.classes}" />
+      <fileset dir="${dir.lib}" includes="*.jar" />
+    </path>
+  </target>
+</project>
