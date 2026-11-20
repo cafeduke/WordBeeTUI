@@ -1,5 +1,11 @@
 <project name="WordBee" default="all"
   xmlns:ivy="antlib:org.apache.ivy.ant">
+  <!-- Global -->
+  <property environment="env"/>
+  <mkdir dir="${basedir}/lib/ant-contrib"/>
+  <mkdir dir="${basedir}/lib/ivy"/>
+  <get src="https://repo1.maven.org/maven2/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3.jar" dest="${basedir}/lib/ant-contrib/ant-contrib-1.0b3.jar" skipexisting="true"/>
+  <get src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.6.0/ivy-2.6.0.jar" dest="${basedir}/lib/ivy/ivy-2.6.0.jar" skipexisting="true"/>
   <!-- TaskDefs -->
   <taskdef resource="net/sf/antcontrib/antcontrib.properties">
     <classpath>
@@ -11,8 +17,6 @@
       <pathelement location="${basedir}/lib/ivy/ivy-2.6.0.jar" />
     </classpath>
   </taskdef>
-  <!-- Global -->
-  <property environment="env"/>
   <target name="all" depends="jar">
     <ivy:retrieve/>
   </target>
